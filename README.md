@@ -92,7 +92,7 @@ EXAMPLES
   $ emusym link /somewhere/else/my_*
 ```
 
-_See code: [src/commands/link.ts](https://github.com/jonathanj/emusym/blob/v0.1.0/src/commands/link.ts)_
+_See code: [src/commands/link.ts](https://github.com/jonathanj/emusym/blob/v0.1.1/src/commands/link.ts)_
 
 ## `emusym start`
 
@@ -109,5 +109,5 @@ DESCRIPTION
   own changes to be synced.
 ```
 
-_See code: [src/commands/start.ts](https://github.com/jonathanj/emusym/blob/v0.1.0/src/commands/start.ts)_
+_See code: [src/commands/start.ts](https://github.com/jonathanj/emusym/blob/v0.1.1/src/commands/start.ts)_
 <!-- commandsstop -->
