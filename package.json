@@ -1,6 +1,6 @@
 {
   "name": "emusym",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Jonathan Jacobs <jonathan@jsphere.com>",
   "bin": {
     "emusym": "./bin/run"
