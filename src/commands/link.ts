@@ -7,8 +7,10 @@ import {exists, readPackage} from '../util'
 import log from '../log'
 
 export default class Link extends Command {
-  static usage = 'link [PACKAGE_OR_PATH...]'
-  static description = 'describe the command here'
+  static usage = 'link [PATH...]'
+  static description = `Link a local package by path.
+  
+Multiple paths can be provided to link several packages in a single command.`
 
   static strict = false
 
@@ -18,8 +20,12 @@ export default class Link extends Command {
   ]
 
   static flags = {
-    force: flags.boolean(),
-    scope: flags.string(),
+    force: flags.boolean({
+      description: 'Allow overwriting existing source links.'
+    }),
+    scope: flags.string({
+      description: 'Add an npm scope to the destination package name.'
+    }),
   }
 
   conf!: Config
