@@ -1,4 +1,5 @@
-# emusym: Emulate symlinks
+emusym: Emulate symlinks
+========================
 
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
@@ -6,28 +7,52 @@
 [![Downloads/week](https://img.shields.io/npm/dw/emusym.svg)](https://npmjs.org/package/emusym)
 [![License](https://img.shields.io/npm/l/emusym.svg)](https://github.com/jonathan/emusym/blob/master/package.json)
 
+This tool emulates symlinks by watching source packages for changes, copying
+changed distribution files (as seen in `npm pack`) into the destination
+package's `node_modules`.
+
+When doing local development on dependencies, `npm link` (or `yarn link`) is a
+very convenient workflow tool. Unfortunately in some cases build tools do not
+support symlinks in `node_modules`, most (in)famously [React Native's Metro bundler](https://github.com/facebook/metro/issues/1).
+
+What this tool does _not_ do is create the changes to sync, that is left up to
+each package to produce via the most suitable mechanism. Most build tools offer
+something like a `--watch` flag that will incrementally build new output.
+
 <!-- toc -->
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
+
 # Usage
-<!-- usage -->
 ```sh-session
-$ npm install -g emusym
-$ emusym COMMAND
-running command...
-$ emusym (-v|--version|version)
-emusym/0.0.0 darwin-x64 node-v14.16.0
-$ emusym --help [COMMAND]
-USAGE
-  $ emusym COMMAND
-...
+## Install the tool as a dev dependency
+$ yarn add -D emusym   # Or `npm install --save-dev emusym` if using npm.
+
+## Link a source package (`other-package`) to the current package.
+$ yarn emusym link ../my/other-package
+✔  success      📦 ../my/other-package → other-package
+✔  success      🔗 other-package → .
+
+## Start watching and syncing changes…
+$ yarn emusym start
+[other-package] › ℹ  info         ☔️  Preserving existing module
+[other-package] › ℹ  info         Linking ../my/other-package → .
+[other-package] › ▲  add:file     package.json
+[other-package] › ▲  add:dir      src
+[other-package] › ▲  add:file     src/index.js
+[other-package] › ●  change:file  src/index.js
+[other-package] › ▲  add:file     src/new.js
+[other-package] › ●  change:file  src/new.js
+[other-package] › ▼  del:file     src/new.js
 ```
-<!-- usagestop -->
+
+
 # Commands
 <!-- commands -->
 * [`emusym help [COMMAND]`](#emusym-help-command)
-* [`emusym link [PACKAGE_OR_PATH...]`](#emusym-link-package_or_path)
+* [`emusym link [PATH...]`](#emusym-link-path)
 * [`emusym start`](#emusym-start)
 
 ## `emusym help [COMMAND]`
@@ -47,17 +72,20 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
-## `emusym link [PACKAGE_OR_PATH...]`
+## `emusym link [PATH...]`
 
-describe the command here
+Link a local package by path.
 
 ```
 USAGE
-  $ emusym link [PACKAGE_OR_PATH...]
+  $ emusym link [PATH...]
 
 OPTIONS
-  --force
-  --scope=scope
+  --force        Allow overwriting existing source links.
+  --scope=scope  Add an npm scope to the destination package name.
+
+DESCRIPTION
+  Multiple paths can be provided to link several packages in a single command.
 
 EXAMPLES
   $ emusym link /somewhere/else/my_thing
