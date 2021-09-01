@@ -5,8 +5,8 @@
   "bin": {
     "emusym": "./bin/run"
   },
-  "homepage": "https://github.com/jonathan/emusym",
-  "bugs": "https://github.com/jonathan/emusym/issues",
+  "homepage": "https://github.com/jonathanj/emusym",
+  "bugs": "https://github.com/jonathanj/emusym/issues",
   "repository": "https://github.com/jonathanj/emusym.git",
   "dependencies": {
     "@oclif/command": "^1",
